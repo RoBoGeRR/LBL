@@ -1,2 +1,2 @@
 # LBL
-Local Businesses Tracker
+Local Businesses Locator
