@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Business Locator</title>
+    <style>
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUOy0BkAIqj8QmNdYpB9WQ8iskk3hfe98"></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: {lat: 49.831, lng: 24.02} // Default to Kyiv, Ukraine
+            });
+
+            fetch('/api/business/')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(business => {
+                        console.log(business.name, business.latitude, business.longtitude);
+                        new google.maps.Marker({
+                            position: {lat: business.latitude, lng: business.longtitude},
+                            map: map,
+                            title: business.name
+                        });
+                    });
+                });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map"></div>
+</body>
+</html>
